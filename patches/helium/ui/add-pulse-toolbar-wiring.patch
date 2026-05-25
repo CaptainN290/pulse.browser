@@ -1,0 +1,67 @@
+*** Begin Patch
+*** Update File: chrome/browser/ui/browser_actions.cc
+@@
+   root_action_item_->AddChild(
+       SidePanelAction(SidePanelEntryId::kBookmarks, IDS_BOOKMARKS_SIDE_PANEL_TITLE,
+                       IDS_BOOKMARKS_SIDE_PANEL_TITLE, kBookmarksIcon,
+                       kActionSidePanelShowBookmarks, bwi, true)
+           .Build());
+
++  // pulse. side panel toolbar entries
++  root_action_item_->AddChild(
++      SidePanelAction(SidePanelEntryId::kPulseDiscord,
++                      IDS_PULSE_DISCORD_TITLE,
++                      IDS_PULSE_DISCORD_TITLE,
++                      vector_icons::kGroupIcon,
++                      kActionSidePanelShowPulseDiscord, bwi, false)
++          .Build());
+
++  root_action_item_->AddChild(
++      SidePanelAction(SidePanelEntryId::kPulseSpotify,
++                      IDS_PULSE_SPOTIFY_TITLE,
++                      IDS_PULSE_SPOTIFY_TITLE,
++                      vector_icons::kMusicNoteIcon,
++                      kActionSidePanelShowPulseSpotify, bwi, false)
++          .Build());
+
+*** End Patch
+
+*** Begin Patch
+*** Update File: chrome/browser/ui/side_panel/side_panel_entry_id.h
+@@
+ enum class SidePanelEntryId {
+   kBookmarks,
+   kHistory,
+   kReadingList,
+   // ... other entries ...
+
++  // pulse. panels
++  kPulseDiscord,
++  kPulseSpotify,
+
+   kMaxValue = kHistory
+ };
+
+*** End Patch
+
+*** Begin Patch
+*** Update File: chrome/browser/ui/actions/chrome_action_id.h
+@@
+ // Side panel show action ids
+ #define SIDE_PANEL_ACTION_IDS \
+   E(kActionSidePanelShowBookmarks) \
+   E(kActionSidePanelShowHistoryCluster) \
+   E(kActionSidePanelShowComments) \
+   E(kActionSidePanelShowPulseDiscord) \
+   E(kActionSidePanelShowPulseSpotify) \
+
+@@
+ #define TOOLBAR_PINNABLE_ACTION_IDS \
+   E(kActionHome, IDC_HOME) \
+   E(kActionForward, IDC_FORWARD) \
+   /* existing entries... */ \
+   E(kActionMediaControls) \
+   E(kActionSidePanelShowPulseDiscord) \
+   E(kActionSidePanelShowPulseSpotify) \
+
+*** End Patch

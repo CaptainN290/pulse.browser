@@ -1,0 +1,68 @@
+--- a/chrome/browser/resources/side_panel/pulse_discord/app.html.ts
++++ b/chrome/browser/resources/side_panel/pulse_discord/app.html.ts
+@@
++<template>
++  <div id="pulse-discord-root"></div>
++</template>
++
++<script>
++  // Load the shared panel code and open Discord in the panel iframe
++  (function(){
++    const script = document.createElement('script');
++    script.src = '../../pulse_panels.js';
++    script.onload = () => {
++      // Ensure global API exists and then set the iframe src directly to the Discord app.
++      if (window.openPulseDiscordPanel) {
++        window.openPulseDiscordPanel();
++      } else if (window.togglePulsePanel) {
++        window.togglePulsePanel('discord');
++      }
++    };
++    document.head.appendChild(script);
++  })();
++</script>
+
+--- a/chrome/browser/resources/side_panel/pulse_spotify/app.html.ts
++++ b/chrome/browser/resources/side_panel/pulse_spotify/app.html.ts
+@@
++<template>
++  <div id="pulse-spotify-root"></div>
++</template>
++
++<script>
++  (function(){
++    const script = document.createElement('script');
++    script.src = '../../pulse_panels.js';
++    script.onload = () => {
++      if (window.openPulseSpotifyPanel) {
++        window.openPulseSpotifyPanel();
++      } else if (window.togglePulsePanel) {
++        window.togglePulsePanel('spotify');
++      }
++    };
++    document.head.appendChild(script);
++  })();
++</script>
+
+--- a/chrome/browser/ui/side_panel/side_panel_registry.cc
++++ b/chrome/browser/ui/side_panel/side_panel_registry.cc
+@@
+ #include "chrome/browser/ui/side_panel/side_panel_registry.h"
+@@
+ void RegisterSidePanelEntries(SidePanelRegistry* registry) {
+   // Existing registrations...
+
++  // pulse. side panels: Discord and Spotify
+  registry->RegisterEntry(SidePanelEntry::CreateWebView(
+    SidePanelEntryId::kPulseDiscord,
+    base::ASCIIToUTF16("Discord"),
+    GURL("chrome://side-panel/pulse_discord/app.html"),
+    SidePanelEntry::PanelType::kToolbar));
+
+  registry->RegisterEntry(SidePanelEntry::CreateWebView(
+    SidePanelEntryId::kPulseSpotify,
+    base::ASCIIToUTF16("Spotify"),
+    GURL("chrome://side-panel/pulse_spotify/app.html"),
+    SidePanelEntry::PanelType::kToolbar));
+
+ }
